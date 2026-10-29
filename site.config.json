@@ -1,0 +1,13 @@
+{
+  "name": "Your Name",
+  "tagline": "Photography",
+  "description": "A selection of photographs.",
+  "url": "",
+  "links": [
+    { "label": "Email", "href": "mailto:you@example.com" },
+    { "label": "Instagram", "href": "https://instagram.com/" }
+  ],
+  "photos": {
+    "example-filename.jpg": { "alt": "Describe the photo for screen readers", "caption": "Optional caption shown in the viewer" }
+  }
+}

@@ -1,0 +1,108 @@
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --muted: #777;
+  --gap: 8px;
+  --pad: clamp(16px, 3vw, 40px);
+  /* Target row height for the justified grid. Rows grow ~1.6x past this to fill the width. Keep max in sync with ROW_HEIGHT in build.mjs. */
+  --h: clamp(160px, 20vw, 320px);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0d0d0d; --fg: #eee; --muted: #888; }
+}
+* { box-sizing: border-box; margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 0 var(--pad);
+}
+a { color: inherit; text-decoration: none; }
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: calc(var(--pad) * 1.2) 0 var(--pad);
+}
+.name { font-size: 17px; font-weight: 600; letter-spacing: .02em; }
+nav { display: flex; gap: 20px; color: var(--muted); }
+nav a:hover { color: var(--fg); }
+footer { padding: calc(var(--pad) * 1.5) 0; color: var(--muted); font-size: 13px; }
+.empty { padding: 20vh 0; color: var(--muted); text-align: center; }
+
+/* Justified rows: every item grows in proportion to its aspect ratio (--r),
+   so all photos in a row end up the same height with no JS. */
+.g { display: flex; flex-wrap: wrap; gap: var(--gap); }
+.g::after { content: ""; flex-grow: 999999; }
+.p {
+  display: block;
+  flex-grow: calc(var(--r) * 100);
+  flex-basis: calc(var(--r) * var(--h));
+  aspect-ratio: var(--r);
+  background: var(--c);
+  overflow: hidden;
+}
+.p img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.p:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+@media (hover: hover) {
+  .p img { transition: opacity .2s; }
+  .p:hover img { opacity: .92; }
+}
+@media (max-width: 640px) {
+  :root { --gap: 6px; }
+  .p { flex-basis: 100%; }
+}
+
+/* Viewer */
+dialog {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+dialog::backdrop { background: var(--bg); }
+dialog figure {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px var(--pad) 24px;
+}
+dialog picture { display: contents; }
+dialog img {
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: center / contain no-repeat;
+  user-select: none;
+}
+dialog figcaption { color: var(--muted); font-size: 13px; text-align: center; }
+dialog figcaption:empty { display: none; }
+dialog button {
+  position: absolute;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 300 36px/1 system-ui, sans-serif;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+dialog button:hover, dialog button:focus-visible { color: var(--fg); }
+.x { top: 0; right: 0; }
+.prev, .next { top: 50%; transform: translateY(-50%); font-size: 48px; }
+.prev { left: 0; }
+.next { right: 0; }
+@media (hover: none) {
+  .prev, .next { display: none; }
+}
