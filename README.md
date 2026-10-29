@@ -1,7 +1,7 @@
 # Photo site
 
 A minimal, fast photography portfolio. One static HTML page with inline CSS and
-~2 KB of JavaScript, no frameworks, no web fonts.
+about 3 KB of JavaScript, no frameworks, no web fonts.
 
 - **Fast:** each photo is exported in up to 5 sizes as AVIF (with JPEG fallback). Browsers
   download only the size that fits the screen. Images below the fold load lazily, and
